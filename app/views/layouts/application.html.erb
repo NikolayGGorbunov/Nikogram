@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kursch</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <ul>
+      <% if user_signed_in? %>
+        <%= link_to "Loggined as #{current_user.email}", edit_user_registration_path %>
+        <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <p>
+        <%= link_to "Sign In", new_user_session_path %> |
+        <%= link_to "Sign Up", new_user_registration_path %>
+        </p>
+        <%= link_to "Posts", root_path %> |
+        Profile
+      <% end %>
+    </ul>
+    <%= yield %>
+  </body>
+</html>
