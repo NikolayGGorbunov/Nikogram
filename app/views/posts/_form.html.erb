@@ -21,8 +21,15 @@
     <%= form.label :body %><br>
     <%= form.text_area :body %>
   </div>
+  <div>
+    <% if post.images.attached? %>
+      <%= image_tag post.images, style: "width: 150px; display: block" %>
+    <% end %>
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true%>
+  </div>
   <br>
-  
+
   <div>
     <%= form.submit %>
   </div>
