@@ -4,7 +4,10 @@ class LikesController < ApplicationController
   before_action :connect_like, only: :destroy
 
   def create
-    @post.likes.create(user_id: current_user.id)
+    binding.pry
+    if !already_liked?
+      @post.likes.create(user_id: current_user.id)
+    end
     redirect_to post_path(@post)
   end
 

@@ -7,6 +7,7 @@ gem "devise"
 
 gem "mini_magick"
 gem "rmagick"
+gem 'pry', '~> 0.13.1'
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
