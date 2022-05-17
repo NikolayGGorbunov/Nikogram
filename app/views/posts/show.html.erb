@@ -3,20 +3,27 @@
 <%= render @post %>
 
 <div>
-  <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
-  <% if pre_like %>
-    <%= button_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
-  <% else %>
-    <%= button_to 'Like', post_likes_path(@post), method: :post %>
-  <% end %>
+  <% if user_signed_in? %>
+    <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
+    <% if pre_like %>
+      <%= button_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
+    <% else %>
+      <%= button_to 'Like', post_likes_path(@post), method: :post %>
+    <% end %>
 
-  <% pre_sub = current_user.active_subscribes.find_by(subscribed_id: @post.user_id) %>
-  <% if pre_sub %>
-    <%= button_to 'Unsubscribe', subscribe_path(@post.user_id), method: :delete %>
-  <% else %>
-    <%= button_to 'Subscribe', subscribes_path(@post.user_id), method: :post %>
-  <% end %>
+    <% pre_sub = current_user.active_subscribes.find_by(subscribed_id: @post.user_id) %>
+    <% if pre_sub %>
+      <%= button_to 'Unsubscribe', user_subscribe_path(@post.user, post_id: @post.id), method: :delete %>
+    <% else %>
+      <%= button_to 'Subscribe', user_subscribes_path(@post.user, post_id: @post.id), method: :post %>
+    <% end %>
 
+    <b>Leave a comment:</b><br>
+    <%= render "comments/form" %>
+
+  <% else %>
+    <p>Only signed users can subscribe, like posts and leave a comments!</p>
+  <% end %>
 
   <p><%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
   <%= link_to "Edit this post", edit_post_path(@post) %> |
@@ -24,8 +31,9 @@
   <%= button_to "Destroy this post", @post, method: :delete, form: {data: {turbo_confirm: "O'rly?"}} %>
 </div>
 
-<h4>Comments:</h4>
-<%= render @post.comments %>
-
-<b>Leave a comment:</b><br>
-<%= render "comments/form" %>
+<% if @post.comments.empty? %>
+  <h4>There is no comments now</h4>
+<% else %>
+  <h4>Comments:</h4>
+  <%= render @post.comments %>
+<% end %>

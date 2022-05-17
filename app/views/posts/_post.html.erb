@@ -4,5 +4,5 @@
   <% post.images.each do |image| %>
     <%= image_tag image.representation(resize_to_limit: [200, 200]) %>
   <% end %>
-  <em><%= post.body %></em>
+  <em><p><%= post.body %></p></em>
 </div>
