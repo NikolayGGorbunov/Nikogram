@@ -1,5 +1,8 @@
 <div id="<%= dom_id post %>">
   <h3><%= post.user.email %>:</h3>
   <b><%= post.title %></b><br>
+  <% post.images.each do |image| %>
+    <%= image_tag image.representation(resize_to_limit: [200, 200]) %>
+  <% end %>
   <em><%= post.body %></em>
 </div>

@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
 
   def index
-    @posts = Post.includes(:comments).all
+    @posts = Post.includes(:comments).all.with_attached_images
   end
 
   def show
@@ -46,6 +46,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-      params.require(:post).permit(:title, :body)
+      params.require(:post).permit(:title, :body, images: [])
   end
 end
