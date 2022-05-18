@@ -5,8 +5,12 @@ class PostsController < ApplicationController
     @posts = Post.includes(:comments).all.with_attached_images
   end
 
+  def feed
+    @posts = Post.includes(:comments).where(user_id: current_user.subscribing.all.ids)
+  end
+
   def show
-    @post = Post.includes(:comments, :user).find(params[:id])
+    @post = Post.includes(:comments).find(params[:id])
   end
 
   def new
@@ -31,6 +35,11 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
 
       if @post.update(post_params)
+        if params[:post][:images].present?
+          params[:post][:images].each do |image|
+            @post.images.attach(image)
+          end
+        end
         redirect_to @post
       else
         render :new, status: :unprocessable_entity
@@ -43,9 +52,10 @@ class PostsController < ApplicationController
 
     redirect_to posts_path
   end
+
   private
 
   def post_params
-      params.require(:post).permit(:title, :body, images: [])
+      params.require(:post).permit(:title, :body)
   end
 end

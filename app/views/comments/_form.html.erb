@@ -1,7 +1,7 @@
 <div>
-  <%= form_with model: [@post, @post.comments.new] do |form| %>
+  <%= form_with model: [@post, current_user.comments.new] do |form| %>
     <em><%= form.text_area :body %></em><br>
-
+    <%= form.hidden_field :post_id, value: @post.id %>
     <em><%= form.submit %></em><br>
   <% end %>
 </div>

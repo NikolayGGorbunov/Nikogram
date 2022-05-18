@@ -1,0 +1,9 @@
+<%= @user.email %>
+<% if user_signed_in? %>
+  <% pre_sub = current_user.active_subscribes.find_by(subscribed_id: @user.id) %>
+  <% if pre_sub %>
+    <%= button_to 'Unsubscribe', user_subscribe_path(@user), method: :delete %>
+  <% else %>
+    <%= button_to 'Subscribe', user_subscribes_path(@user), method: :post %>
+  <% end %>
+<% end %>

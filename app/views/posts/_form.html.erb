@@ -23,7 +23,9 @@
   </div>
   <div>
     <% if post.images.attached? %>
-      <%= image_tag post.images, style: "width: 150px; display: block" %>
+      <% post.images.each do |img| %>
+        <%= image_tag img, style: "width: 150px; display: block" %>
+      <% end %>
     <% end %>
     <%= form.label :images %>
     <%= form.file_field :images, multiple: true%>

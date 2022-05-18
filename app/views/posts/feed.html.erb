@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<center>
+  <h1>Feed</h1>
+</center>
+
+<p><%= link_to "New post", new_post_path %></p>
+
+<hr>
+<table>
+  <tbody id="posts">
+    <% @posts.each do |post| %>
+        <%= render post %>
+        <tr><%= link_to "Show this post", post %></tr><br>
+        <h3>Comments:</h3>
+        <%= render post.comments %>
+        <hr>
+    <% end %>
+  </tbody>
+</table>

@@ -20,9 +20,13 @@
         <%= link_to "Sign In", new_user_session_path %> |
         <%= link_to "Sign Up", new_user_registration_path %>
         </p>
-        <%= link_to "Posts", root_path %> |
-        Profile
       <% end %>
+      <p>
+      <%= link_to "Posts", root_path %> |
+      <% if :authenticate_user! %>
+        <%= link_to "Feed", feed_path %>
+      <% end %>
+      </p>
     </ul>
     <%= yield %>
   </body>
