@@ -33,7 +33,6 @@ class PostsController < ApplicationController
 
   def update
       @post = Post.find(params[:id])
-
       if @post.update(post_params)
         if params[:post][:images].present?
           params[:post][:images].each do |image|
@@ -47,7 +46,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find(params[:id])
     @post.destroy
 
     redirect_to posts_path
