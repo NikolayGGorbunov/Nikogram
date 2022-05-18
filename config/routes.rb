@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resources :comments
     resources :likes
   end
+  resources :subscribes
   # Defines the root path route ("/")
   # root "articles#index"
 end

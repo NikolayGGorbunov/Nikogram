@@ -4,11 +4,20 @@
 
 <div>
   <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
-<% if pre_like %>
-  <%= button_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
-<% else %>
-  <%= button_to 'Like', post_likes_path(@post), method: :post %>
-<% end %>
+  <% if pre_like %>
+    <%= button_to 'Unlike', post_like_path(@post, pre_like), method: :delete %>
+  <% else %>
+    <%= button_to 'Like', post_likes_path(@post), method: :post %>
+  <% end %>
+
+  <% pre_sub = current_user.active_subscribes.find_by(subscribed_id: @post.user_id) %>
+  <% if pre_sub %>
+    <%= button_to 'Unsubscribe', subscribe_path(@post.user_id), method: :delete %>
+  <% else %>
+    <%= button_to 'Subscribe', subscribes_path(@post.user_id), method: :post %>
+  <% end %>
+
+
   <p><%= @post.likes.count %> <%= (@post.likes.count) == 1 ? 'Like' : 'Likes'%></p>
   <%= link_to "Edit this post", edit_post_path(@post) %> |
   <%= link_to "Back to posts", posts_path %>
