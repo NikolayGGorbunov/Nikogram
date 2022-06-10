@@ -1,14 +1,11 @@
 class CommentsController < ApplicationController
-  def index
-    @comments = Comment.includes(:user).all
-  end
-
+  before_action :authenticate_user!, except: [:show, :index]
   def show
     @comment = Comment.find(params[:id])
   end
 
-  def new
-    @comment = Comment.new
+  def index
+    @comments = Comment.where(post_id: params[:post_id])
   end
 
   def create
@@ -34,8 +31,9 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
+    redirect_to post_path(@post)
   end
-  
+
   private
 
   def comment_params

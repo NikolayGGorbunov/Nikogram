@@ -5,10 +5,7 @@
 <div id="comments">
   <% @comments.each do |comment| %>
     <%= render comment %>
-    <p>
-      <%= link_to "Show this comment", comment %>
-    </p>
+    <%= link_to 'Delete', post_comment_path(@comments, @post, comment, method: :delete), form: {data: {turbo_confirm: "O'rly?"}} %>
+    <%= button_to "Destroy this comment", post_comment: comment, method: :delete, form: {data: {turbo_confirm: "O'rly?"}} %>
   <% end %>
 </div>
-
-<%= link_to "New comment", new_comment_path %>

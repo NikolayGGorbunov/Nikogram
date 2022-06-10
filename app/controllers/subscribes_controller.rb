@@ -4,7 +4,9 @@ class SubscribesController < ApplicationController
   before_action :connect_subscribes, only: [:create, :destroy]
 
   def create
-    @subscribes.create(subscribed_id: params[:user_id])
+    if !self_subscribe?
+      @subscribes.create(subscribed_id: params[:user_id])
+    end
     redirect_to post_path(@post)
   end
 
@@ -24,7 +26,11 @@ class SubscribesController < ApplicationController
   end
 
   def already_subscribed?
-    Sbscribe.where(subscriber_id: current_user.id, subscribed_id: params[:user_id]).exist?
+    Subscribe.where(subscriber_id: current_user.id, subscribed_id: params[:user_id]).exist?
+  end
+
+  def self_subscribe?
+    current_user.id == params[:user_id].to_i
   end
 
 end

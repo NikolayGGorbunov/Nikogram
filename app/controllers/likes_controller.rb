@@ -24,7 +24,7 @@ class LikesController < ApplicationController
   end
 
   def connect_like
-    @like = @post.likes.find(params[:id])
+    @like = @post.likes.find_by(user_id: current_user.id)
   end
 
   def already_liked?
